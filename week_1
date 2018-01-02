@@ -44,25 +44,36 @@ seg_df <- data.frame(x1 = 1973, x2 = 1973,
                      x3 = 1992, x4 = 1992,
                      y3 = 66, y4 = 110)
 
+raw_sales_pork <- raw_sales %>% filter(year >= "1982" & meat == "pork")
+raw_sales_beef <- raw_sales %>% filter(year >= "1992" & meat == "beef")
+raw_sales_chicken <- raw_sales %>% filter(year >= "1982" & meat == "chicken")
+
 (g_sales <- ggplot() + 
     geom_line(data = raw_sales, aes(x = year, y = sales, group = factor(meat), color = factor(meat)), size = 2, alpha = 0.7) +
+    geom_line(data = raw_sales_pork, aes(x = year, y = sales, group = 1), color = "grey", size = 4, alpha = 0.7) +
+    geom_line(data = raw_sales_beef, aes(x = year, y = sales, group = 1), color = "grey", size = 4, alpha = 0.7) +
+    geom_line(data = raw_sales_chicken, aes(x = year, y = sales, group = 1), color = "blue", size = 2, alpha = 0.7) +
     geom_point(aes(x = 1973, y = 81), size = 4, color = "red") +
     geom_point(aes(x = 1992, y = 66), size = 4, color = "blue") +
     geom_point(aes(x = 1982, y = 49), size = 4, color = "green4") +
-    geom_text(aes(x = 1969, y = 105), label = "1973 - Crop crisis leads to brief beef shortage", hjust = 0, color = "red", fontface = "bold") +
-    geom_text(aes(x = 1987, y = 28), label = "1982 - Pork is passed by chicken", color = "green4", fontface = "bold") +
-    geom_text(aes(x = 1987, y = 24), label = "but remains stable over the next 30 years", color = "green4", fontface = "bold") +
-    geom_text(aes(x = 1994, y = 120), label = "1992 - Chicken passes beef for first time", color = "blue", fontface = "bold") +
-    geom_text(aes(x = 1994, y = 115), label = "and continues to outpace beef sales", color = "blue", fontface = "bold") +
+    geom_text(aes(x = 1965, y = 110), label = "1973: beef shortage", hjust = 0, color = "red", fontface = "bold") +
+    geom_text(aes(x = 1965, y = 105), label = "crop crisis decreases beef supply", hjust = 0, color = "red") +
+    geom_text(aes(x = 1984, y = 28), label = "1982: pork passed", color = "green4", fontface = "bold") +
+    geom_text(aes(x = 1990.5, y = 24), label = "but pork remains stable over the next 30 years", color = "green4") +
+    geom_text(aes(x = 1994.5, y = 119), label = "1992: beef passed", color = "blue", fontface = "bold") +
+    geom_text(aes(x = 2000.6, y = 115), label = "and chicken continues to outpace beef sales", color = "blue") +
     geom_text(aes(x = 1961, y = 80), label = "Beef", color = "red", fontface = "bold", size = 8) +
     geom_text(aes(x = 1963, y = 23), label = "Chicken", color = "blue", fontface = "bold", size = 8) +
     geom_text(aes(x = 1961, y = 51), label = "Pork", color = "green4", fontface = "bold", size = 8) +
-    geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2), data = seg_df, size = 2, color = "red") +
-    geom_segment(aes(x = x3, y = y3, xend = x4, yend = y4), data = seg_df, size = 2, color = "blue") +
-    geom_segment(aes(x = 1982, y = 49, xend = 1982, yend = 31), size = 2, color = "green4") +
+    geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2), data = seg_df, size = 1.5, color = "red") +
+    geom_segment(aes(x = x3, y = y3, xend = x4, yend = y4), data = seg_df, size = 1.5, color = "blue") +
+    geom_segment(aes(x = 1982, y = 49, xend = 1982, yend = 31), size = 1.5, color = "green4") +
     geom_point(aes(x = 2016, y = 56.5), size = 4, color = "red") +
+    geom_point(aes(x = 2016, y = 56.5), size = 6, color = "grey", alpha = 0.7) +
     geom_point(aes(x = 2016, y = 91), size = 4, color = "blue") +
     geom_point(aes(x = 2016, y = 50.1), size = 4, color = "green4") +
+    geom_point(aes(x = 2016, y = 50.1), size = 6, color = "grey", alpha = 0.7) +
+    
     geom_hline(yintercept = 0, size = 1) +
     scale_y_continuous(breaks = c(0, 20, 40, 60, 80, 100, 120)) +
     theme_minimal() +
